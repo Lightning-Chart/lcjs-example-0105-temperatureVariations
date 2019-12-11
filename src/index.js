@@ -1,4 +1,4 @@
-/**
+/*
  * LightningChartJS example that showcases a simulation of daily temperature variations.
  */
 // Import LightningChartJS
