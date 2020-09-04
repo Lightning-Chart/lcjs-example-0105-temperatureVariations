@@ -11,9 +11,12 @@ const {
     SolidFill,
     SolidLine,
     ColorRGBA,
+    ColorHEX,
     LegendBoxBuilders,
     UIOrigins,
-    emptyLine
+    emptyLine,
+    Themes,
+    LinearGradientFill
 } = lcjs
 
 // Decide on an origin for DateTime axis.
@@ -21,9 +24,10 @@ const dateOrigin = new Date(2019, 3, 1)
 
 // Create a XY Chart.
 const chart = lightningChart().ChartXY({
-    defaultAxisXTickStrategy: AxisTickStrategies.DateTime(dateOrigin)
+    // theme: Themes.dark
 })
-    .setTitle('Daily temperature range, April 2019')
+chart.getDefaultAxisX().setTickStrategy(AxisTickStrategies.DateTime, (tickStrategy) => tickStrategy.setDateOrigin(dateOrigin))
+chart.setTitle('Daily temperature range, April 2019')
 
 const axisX = chart.getDefaultAxisX()
 const axisY = chart.getDefaultAxisY()
@@ -35,8 +39,16 @@ const recordRange = chart.addAreaRangeSeries()
 // Current month daily temperature variations
 const currentRange = chart.addAreaRangeSeries()
 // ----- Series stylings
-// Temperature records fill style
-const recordRangeFillStyle = new SolidFill({ color: ColorRGBA(100, 100, 100, 80) })
+// Temperature records fill style, gradient Red - Blue scale. 
+const recordRangeFillStyle = new LinearGradientFill(
+    {
+        angle: 0,
+        stops:[
+             {color: ColorHEX('#0000FF9F'), offset:0},
+             {color: ColorHEX('#FF00009F'), offset:1}
+         ]
+    }
+)
 // Record range stroke fill style, high line
 const recordRangeStrokeFillStyleHigh = new SolidLine().setFillStyle(new SolidFill({ color: ColorRGBA(250, 91, 70) }))
 // Record range stroke fill style, low line
