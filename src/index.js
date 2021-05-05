@@ -77,7 +77,7 @@ currentRange
 
 // ----- Result tables settings
 // Record range
-recordRange.setResultTableFormatter((builder, series, figure, yMax, yMin) => {
+recordRange.setCursorResultTableFormatter((builder, series, figure, yMax, yMin) => {
     return builder
         .addRow('Temperature records range')
         .addRow('Date: ' + axisX.formatValue(figure))
@@ -85,7 +85,7 @@ recordRange.setResultTableFormatter((builder, series, figure, yMax, yMin) => {
         .addRow('Lowest: ' + yMin.toFixed(2) + ' °C')
 })
 // Current range
-currentRange.setResultTableFormatter((builder, series, figure, yMax, yMin) => {
+currentRange.setCursorResultTableFormatter((builder, series, figure, yMax, yMin) => {
     return builder
         .addRow('2019 temperatures')
         .addRow('Date: ' + axisX.formatValue(figure))
@@ -150,18 +150,6 @@ currentRangeData.forEach((point, i) => {
     currentRange.add({ position: (point.x * 24 * 60 * 60 * 1000), high: point.yMax, low: point.yMin })
 })
 // ----- Add legend box
-const legendBox = chart.addLegendBox(LegendBoxBuilders.HorizontalLegendBox, {
-    x: axisX.scale,
-    y: axisY.scale
-})
-    .setPosition({ x: currentRange.getXMax() / 2, y: axisY.scale.getInnerStart() })
-    .setOrigin(UIOrigins.CenterBottom)
-    .setMargin(3)
+const legendBox = chart.addLegendBox(LegendBoxBuilders.HorizontalLegendBox)
 
-const entries = legendBox.add(chart)
-entries[0]
-    .setButtonOnFillStyle(recordRangeFillStyle)
-    .setButtonOnStrokeStyle(emptyLine)
-entries[1]
-    .setButtonOnFillStyle(currentRangeFillStyle)
-    .setButtonOnStrokeStyle(emptyLine)
+legendBox.add(chart)
