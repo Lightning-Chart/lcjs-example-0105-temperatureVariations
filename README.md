@@ -1,6 +1,6 @@
-# Temperature Variations
+# Temperature Variations JavaScript Chart
 
-![Temperature Variations](temperatureVariations.png)
+![Temperature Variations JavaScript Chart](temperatureVariations.png)
 
 This demo application belongs to the set of examples for LightningChart JS, data visualization library for JavaScript.
 
