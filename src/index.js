@@ -13,10 +13,8 @@ const {
     ColorRGBA,
     ColorHEX,
     LegendBoxBuilders,
-    UIOrigins,
-    emptyLine,
-    Themes,
-    LinearGradientFill
+    LinearGradientFill,
+    Themes
 } = lcjs
 
 // Decide on an origin for DateTime axis.
@@ -24,7 +22,7 @@ const dateOrigin = new Date(2019, 3, 1)
 
 // Create a XY Chart.
 const chart = lightningChart().ChartXY({
-    // theme: Themes.dark
+    // theme: Themes.darkGold
 })
 chart.getDefaultAxisX().setTickStrategy(AxisTickStrategies.DateTime, (tickStrategy) => tickStrategy.setDateOrigin(dateOrigin))
 chart.setTitle('Daily temperature range, April 2019')
@@ -151,5 +149,10 @@ currentRangeData.forEach((point, i) => {
 })
 // ----- Add legend box
 const legendBox = chart.addLegendBox(LegendBoxBuilders.HorizontalLegendBox)
+    // Dispose example UI elements automatically if they take too much space. This is to avoid bad UI on mobile / etc. devices.
+    .setAutoDispose({
+        type: 'max-width',
+        maxWidth: 0.80,
+    })
 
 legendBox.add(chart)

@@ -87,7 +87,7 @@ Direct developer email support can be purchased through a [Support Plan][4] or b
 © Arction Ltd 2009-2020. All rights reserved.
 
 
-[XY cartesian chart]: https://www.arction.com/lightningchart-js-api-documentation/v3.0.1/classes/chartxy.html
-[Area point]: https://www.arction.com/lightningchart-js-api-documentation/v3.0.1/interfaces/areapoint.html
-[Area Range series]: https://www.arction.com/lightningchart-js-api-documentation/v3.0.1/classes/arearangeseries.html
+[XY cartesian chart]: https://www.arction.com/lightningchart-js-api-documentation/v3.1.0/classes/chartxy.html
+[Area point]: https://www.arction.com/lightningchart-js-api-documentation/v3.1.0/interfaces/areapoint.html
+[Area Range series]: https://www.arction.com/lightningchart-js-api-documentation/v3.1.0/classes/arearangeseries.html
 
