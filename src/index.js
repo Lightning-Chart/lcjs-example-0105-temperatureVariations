@@ -5,17 +5,8 @@
 const lcjs = require('@arction/lcjs')
 
 // Extract required parts from LightningChartJS.
-const {
-    lightningChart,
-    AxisTickStrategies,
-    SolidFill,
-    SolidLine,
-    ColorRGBA,
-    ColorHEX,
-    LegendBoxBuilders,
-    LinearGradientFill,
-    Themes
-} = lcjs
+const { lightningChart, AxisTickStrategies, SolidFill, SolidLine, ColorRGBA, ColorHEX, LegendBoxBuilders, LinearGradientFill, Themes } =
+    lcjs
 
 // Decide on an origin for DateTime axis.
 const dateOrigin = new Date(2019, 3, 1)
@@ -28,25 +19,21 @@ chart.getDefaultAxisX().setTickStrategy(AxisTickStrategies.DateTime, (tickStrate
 chart.setTitle('Daily temperature range, April 2019')
 
 const axisX = chart.getDefaultAxisX()
-const axisY = chart.getDefaultAxisY()
-    .setTitle('Temperature (°C)')
-    .setScrollStrategy(undefined)
+const axisY = chart.getDefaultAxisY().setTitle('Temperature (°C)').setScrollStrategy(undefined)
 
 // Daily temperature records
 const recordRange = chart.addAreaRangeSeries()
 // Current month daily temperature variations
 const currentRange = chart.addAreaRangeSeries()
 // ----- Series stylings
-// Temperature records fill style, gradient Red - Blue scale. 
-const recordRangeFillStyle = new LinearGradientFill(
-    {
-        angle: 0,
-        stops:[
-             {color: ColorHEX('#0000FF9F'), offset:0},
-             {color: ColorHEX('#FF00009F'), offset:1}
-         ]
-    }
-)
+// Temperature records fill style, gradient Red - Blue scale.
+const recordRangeFillStyle = new LinearGradientFill({
+    angle: 0,
+    stops: [
+        { color: ColorHEX('#0000FF9F'), offset: 0 },
+        { color: ColorHEX('#FF00009F'), offset: 1 },
+    ],
+})
 // Record range stroke fill style, high line
 const recordRangeStrokeFillStyleHigh = new SolidLine().setFillStyle(new SolidFill({ color: ColorRGBA(250, 91, 70) }))
 // Record range stroke fill style, low line
@@ -61,11 +48,8 @@ recordRange
     .setName('Temperature records range')
     .setHighFillStyle(recordRangeFillStyle)
     // Same fill style for the highlighted series
-    .setHighFillStyleHighlight(recordRangeFillStyle)
     .setHighStrokeStyle(recordRangeStrokeFillStyleHigh)
-    .setHighStrokeStyleHighlight(recordRangeStrokeFillStyleHigh)
     .setLowStrokeStyle(recordRangeStrokeFillStyleLow)
-    .setLowStrokeStyleHighlight(recordRangeStrokeFillStyleLow)
 // Current range
 currentRange
     .setName('2019 temperatures')
@@ -111,7 +95,7 @@ for (let i = 0; i < 31; i++) {
         return {
             x,
             yMax,
-            yMin
+            yMin,
         }
     }
     currentRangeData.push(randomPoint())
@@ -124,7 +108,7 @@ for (let i = 1; i < currentRangeData.length; i++) {
     if (currentRangeData[i].yMax > recordYMax) recordYMax = currentRangeData[i].yMax
 }
 // Set series interval
-axisY.setInterval(recordYMin - 5, recordYMax + 5)
+axisY.setInterval({ start: recordYMin - 5, end: recordYMax + 5, stopAxisAfter: false })
 // ----- Generate record temperatures
 for (let i = 0; i < 31; i++) {
     const randomPoint = () => {
@@ -134,25 +118,26 @@ for (let i = 0; i < 31; i++) {
         return {
             x,
             yMax,
-            yMin
+            yMin,
         }
     }
     recordRangeData.push(randomPoint())
 }
 // ----- Adding data points
 recordRangeData.forEach((point, i) => {
-    recordRange.add({ position: (point.x * 24 * 60 * 60 * 1000), high: point.yMax, low: point.yMin })
+    recordRange.add({ position: point.x * 24 * 60 * 60 * 1000, high: point.yMax, low: point.yMin })
 })
 
 currentRangeData.forEach((point, i) => {
-    currentRange.add({ position: (point.x * 24 * 60 * 60 * 1000), high: point.yMax, low: point.yMin })
+    currentRange.add({ position: point.x * 24 * 60 * 60 * 1000, high: point.yMax, low: point.yMin })
 })
 // ----- Add legend box
-const legendBox = chart.addLegendBox(LegendBoxBuilders.HorizontalLegendBox)
+const legendBox = chart
+    .addLegendBox(LegendBoxBuilders.HorizontalLegendBox)
     // Dispose example UI elements automatically if they take too much space. This is to avoid bad UI on mobile / etc. devices.
     .setAutoDispose({
         type: 'max-width',
-        maxWidth: 0.80,
+        maxWidth: 0.8,
     })
 
 legendBox.add(chart)
