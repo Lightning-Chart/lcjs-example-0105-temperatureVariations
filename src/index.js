@@ -8,18 +8,20 @@ const lcjs = require('@arction/lcjs')
 const { lightningChart, AxisTickStrategies, SolidFill, SolidLine, ColorRGBA, ColorHEX, LegendBoxBuilders, LinearGradientFill, Themes } =
     lcjs
 
-// Decide on an origin for DateTime axis.
-const dateOrigin = new Date(2019, 3, 1)
-
 // Create a XY Chart.
 const chart = lightningChart().ChartXY({
     // theme: Themes.darkGold
-})
-chart.getDefaultAxisX().setTickStrategy(AxisTickStrategies.DateTime, (tickStrategy) => tickStrategy.setDateOrigin(dateOrigin))
-chart.setTitle('Daily temperature range, April 2019')
+}).setTitle('Daily temperature range, April 2019')
 
 const axisX = chart.getDefaultAxisX()
 const axisY = chart.getDefaultAxisY().setTitle('Temperature (°C)').setScrollStrategy(undefined)
+
+// Use DateTime TickStrategy and set the interval
+axisX.setTickStrategy(AxisTickStrategies.DateTime)
+    .setInterval({
+        start: new Date(2019, 0, 1).getTime(),
+        end: new Date(2019, 0, 31).getTime()
+    })
 
 // Daily temperature records
 const recordRange = chart.addAreaRangeSeries()
@@ -83,7 +85,7 @@ const recordRangeData = []
 // Current range
 for (let i = 0; i < 31; i++) {
     const randomPoint = () => {
-        const x = i
+        const x = new Date(2019, 0, i + 1).getTime()
         let yMax
         if (i > 0) {
             const previousYMax = currentRangeData[i - 1].yMax
@@ -112,7 +114,7 @@ axisY.setInterval({ start: recordYMin - 5, end: recordYMax + 5, stopAxisAfter: f
 // ----- Generate record temperatures
 for (let i = 0; i < 31; i++) {
     const randomPoint = () => {
-        const x = i
+        const x = new Date(2019, 0, i + 1).getTime()
         const yMax = randomInt(recordYMax - 2, recordYMax + 2)
         const yMin = randomInt(recordYMin - 1, recordYMin)
         return {
@@ -125,11 +127,11 @@ for (let i = 0; i < 31; i++) {
 }
 // ----- Adding data points
 recordRangeData.forEach((point, i) => {
-    recordRange.add({ position: point.x * 24 * 60 * 60 * 1000, high: point.yMax, low: point.yMin })
+    recordRange.add({ position: point.x, high: point.yMax, low: point.yMin })
 })
 
 currentRangeData.forEach((point, i) => {
-    currentRange.add({ position: point.x * 24 * 60 * 60 * 1000, high: point.yMax, low: point.yMin })
+    currentRange.add({ position: point.x, high: point.yMax, low: point.yMin })
 })
 // ----- Add legend box
 const legendBox = chart
