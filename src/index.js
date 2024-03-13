@@ -10,7 +10,7 @@ const { lightningChart, AxisTickStrategies, SolidFill, SolidLine, ColorRGBA, Col
 
 // Create a XY Chart.
 const chart = lightningChart().ChartXY({
-    // theme: Themes.darkGold
+    theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined,
 }).setTitle('Daily temperature range, April 2019')
 
 const axisX = chart.getDefaultAxisX()
