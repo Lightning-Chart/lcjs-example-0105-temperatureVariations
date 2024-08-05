@@ -2,7 +2,7 @@
  * LightningChartJS example that showcases a simulation of daily temperature variations.
  */
 // Import LightningChartJS
-const lcjs = require('@arction/lcjs')
+const lcjs = require('@lightningchart/lcjs')
 
 // Extract required parts from LightningChartJS.
 const { lightningChart, AxisTickStrategies, SolidFill, SolidLine, ColorRGBA, ColorHEX, LegendBoxBuilders, LinearGradientFill, Themes } =
@@ -11,19 +11,20 @@ const { lightningChart, AxisTickStrategies, SolidFill, SolidLine, ColorRGBA, Col
 // Create a XY Chart.
 const chart = lightningChart({
             resourcesBaseUrl: new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pathname + 'resources/',
-        }).ChartXY({
-    theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined,
-}).setTitle('Daily temperature range, April 2019')
+        })
+    .ChartXY({
+        theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined,
+    })
+    .setTitle('Daily temperature range, April 2019')
 
 const axisX = chart.getDefaultAxisX()
-const axisY = chart.getDefaultAxisY().setTitle('Temperature (°C)').setScrollStrategy(undefined)
+const axisY = chart.getDefaultAxisY().setTitle('Temperature').setUnits('°C').setScrollStrategy(undefined)
 
 // Use DateTime TickStrategy and set the interval
-axisX.setTickStrategy(AxisTickStrategies.DateTime)
-    .setInterval({
-        start: new Date(2019, 0, 1).getTime(),
-        end: new Date(2019, 0, 31).getTime()
-    })
+axisX.setTickStrategy(AxisTickStrategies.DateTime).setInterval({
+    start: new Date(2019, 0, 1).getTime(),
+    end: new Date(2019, 0, 31).getTime(),
+})
 
 // Daily temperature records
 const recordRange = chart.addAreaRangeSeries()
@@ -61,23 +62,6 @@ currentRange
     .setHighStrokeStyle(currentRangeStrokeFillStyle)
     .setLowStrokeStyle(currentRangeStrokeFillStyle)
 
-// ----- Result tables settings
-// Record range
-recordRange.setCursorResultTableFormatter((builder, series, figure, yMax, yMin) => {
-    return builder
-        .addRow('Temperature records range')
-        .addRow('Date: ' + axisX.formatValue(figure))
-        .addRow('Highest: ' + yMax.toFixed(2) + ' °C')
-        .addRow('Lowest: ' + yMin.toFixed(2) + ' °C')
-})
-// Current range
-currentRange.setCursorResultTableFormatter((builder, series, figure, yMax, yMin) => {
-    return builder
-        .addRow('2019 temperatures')
-        .addRow('Date: ' + axisX.formatValue(figure))
-        .addRow('Highest: ' + yMax.toFixed(2) + ' °C')
-        .addRow('Lowest: ' + yMin.toFixed(2) + ' °C')
-})
 // ----- Generating data
 const randomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min
