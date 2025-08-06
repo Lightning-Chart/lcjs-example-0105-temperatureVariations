@@ -5,7 +5,7 @@
 const lcjs = require('@lightningchart/lcjs')
 
 // Extract required parts from LightningChartJS.
-const { lightningChart, AxisTickStrategies, SolidFill, SolidLine, ColorRGBA, ColorHEX, LegendBoxBuilders, LinearGradientFill, Themes } =
+const { lightningChart, AxisTickStrategies, SolidFill, SolidLine, ColorRGBA, ColorHEX, LinearGradientFill, Themes } =
     lcjs
 
 // Create a XY Chart.
@@ -119,13 +119,3 @@ recordRangeData.forEach((point, i) => {
 currentRangeData.forEach((point, i) => {
     currentRange.add({ position: point.x, high: point.yMax, low: point.yMin })
 })
-// ----- Add legend box
-const legendBox = chart
-    .addLegendBox(LegendBoxBuilders.HorizontalLegendBox)
-    // Dispose example UI elements automatically if they take too much space. This is to avoid bad UI on mobile / etc. devices.
-    .setAutoDispose({
-        type: 'max-width',
-        maxWidth: 0.8,
-    })
-
-legendBox.add(chart)
