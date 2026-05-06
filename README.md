@@ -87,7 +87,7 @@ Direct developer email support can be purchased through a [Support Plan][4] or b
 © LightningChart Ltd 2009-2026. All rights reserved.
 
 
-[XY cartesian chart]: https://lightningchart.com/js-charts/api-documentation/v8.2.0/classes/ChartXY.html
-[Area point]: https://lightningchart.com/js-charts/api-documentation/v8.2.0/interfaces/AreaPoint.html
-[Area Range series]: https://lightningchart.com/js-charts/api-documentation/v8.2.0/classes/AreaRangeSeries.html
+[XY cartesian chart]: https://lightningchart.com/js-charts/api-documentation/v8.3.0/classes/ChartXY.html
+[Area point]: https://lightningchart.com/js-charts/api-documentation/v8.3.0/interfaces/AreaPoint.html
+[Area Range series]: https://lightningchart.com/js-charts/api-documentation/v8.3.0/classes/AreaRangeSeries.html
 
